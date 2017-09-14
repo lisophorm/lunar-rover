@@ -8,11 +8,11 @@ describe("The Lander", function () {
     var lander=new Lander();
 
     it("can land on the Moon", function () {
-        expect(false).toEqual(lander.canLand);
+        expect(lander.canLand).toBe(true);
     });
 
     it("will land at a specific position", function () {
-        expect(false).toEqual(lander.canLandAtSpecPos);
+        expect(lander.canLandAtSpecPos).toBe(true);
     });
 });
 
@@ -21,14 +21,15 @@ describe("The Rover", function () {
     var rover=new Rover();
 
     it("can disembark the Lander", function () {
-        expect(false).toEqual(rover.canDisembark);
+        expect(rover.canDisembark).toBe(true);
+
     });
 
     it("will disembark initially at the Landers position", function () {
-        expect(false).toEqual(rover.disembarkAtLanderPosition);
+        expect(rover.disembarkAtLanderPosition).toBe(true);
     });
 
     it("can move around the Moon", function () {
-        expect(false).toEqual(rover.canMoveAround);
+        expect(rover.canMoveAround).toBe(true);
     });
 });
