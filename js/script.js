@@ -213,8 +213,9 @@ $(document).ready(function () {
     gameEngine.addActor(rover, 'rover');
     gameEngine.addActor(moon, 'moon');
 
-    gameEngine.initGame();
+    // on a complete game I would use different states
 
+    gameEngine.initGame();
 
 
 });
