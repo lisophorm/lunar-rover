@@ -11,7 +11,8 @@
 //**************************
 // the main loop is at the very bottom
 // due the limited amount of time I could not investigate a more elegant way to pass the tests other than static attributes
-// also the gravity is very crude but the associative array with all the objects could be used with a physics engine
+//
+// also the gravity is very crude, but the associative array with all the objects could be used with a physics engine
 //****************************
 
 function Point(x, y) {
@@ -34,7 +35,6 @@ Lander.prototype.iteration = function () {
 }
 
 Lander.prototype.pos = function (point) {
-    console.log('SET LANDER POS');
     this.css({top: point.y, left: point.x});
 }
 
@@ -57,7 +57,6 @@ Rover.prototype.iteration = function () {
 }
 
 Rover.prototype.pos = function (point) {
-    console.log('SET ROVER POS');
     this.css({top: point.y, left: point.x});
 }
 
@@ -115,11 +114,6 @@ GameEngine.prototype.addActor = function (actor, actorname) {
 // Main game loop. Having more time I would have used states too
 
 GameEngine.prototype.executeTick = function () {
-    var landerCoords = new Point(0, 0);
-    var roverCoords = new Point(0, 0);
-
-
-    this.actorList['moon'].pos(this.actorList['moon'].coords);
 
     if(!this.actorList['rover'].disembarked) {
         //
@@ -128,6 +122,7 @@ GameEngine.prototype.executeTick = function () {
         //
         if (!this.checkCollision(this.actorList['lander'],this.actorList['moon'])) {
             this.actorList['lander'].coords.y+=3;
+            this.actorList['lander'].coords.x+=this.thrustDirection;
         } else {
             this.actorList['rover'].coords=this.actorList['lander'].coords;
             this.actorList['rover'].disembarked=true;
@@ -167,6 +162,27 @@ GameEngine.prototype.checkCollision = function ($div1, $div2) {
     return true;
 }
 
+GameEngine.prototype.initGame = function() {
+
+    this.actorList['moon'].pos(this.actorList['moon'].coords);
+
+    // old trick for scoping
+    var THIS = this;
+    $(document).on('keydown', function(e){
+        console.log('GINO',e.which);
+        THIS.sendUserInput(e.which);
+
+    });
+    $(document).on('keyup', function(e){
+        console.log('GINO',e.which);
+        THIS.sendUserInput(0);
+    });
+
+    window.setInterval(function () {
+        THIS.executeTick();
+    }, 100);
+}
+
 // initialization
 
 $(document).ready(function () {
@@ -197,21 +213,9 @@ $(document).ready(function () {
     gameEngine.addActor(rover, 'rover');
     gameEngine.addActor(moon, 'moon');
 
-    $(document).keydown(function(e) {
-        console.log('KEY PRESSED');
-        gameEngine.sendUserInput(e.keyCode);
+    gameEngine.initGame();
 
-    });
-    $(document).keyup(function(e) {
-        console.log('KEY RELEASED');
-        gameEngine.sendUserInput(0);
-        //this.sendUserInput(e.which);
 
-    });
-
-    window.setInterval(function () {
-      gameEngine.executeTick();
-    }, 100);
 
 });
 
