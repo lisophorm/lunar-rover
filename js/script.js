@@ -11,7 +11,7 @@
 //**************************
 // the main loop is at the very bottom
 // due the limited amount of time I could not investigate a more elegant way to pass the tests other than static attributes
-//
+// also the gravity is very crude but the associative array with all the objects could be used with a physics engine
 //****************************
 
 function Point(x, y) {
@@ -27,8 +27,10 @@ function Lander() {
     this.coords = new Point();
 }
 
+// iteration stub in case we want to create more complex game logic
+
 Lander.prototype.iteration = function () {
-    console.log('iteration cycle of Lander');
+    //
 }
 
 Lander.prototype.pos = function (point) {
@@ -47,6 +49,8 @@ function Rover() {
     this.coords = new Point();
 }
 
+
+// iteration stub in case we want to create more complex game logic
 Rover.prototype.iteration = function () {
     console.log('iteration cycle of Rover');
 
@@ -62,6 +66,7 @@ Rover.prototype.pos = function (point) {
 function Moon() {
     this.coords = new Point();
 }
+// iteration stub in case we want to create more complex game logic
 
 Moon.prototype.iteration = function () {
     console.log('iteration cycle of Moon');
@@ -186,6 +191,7 @@ $(document).ready(function () {
 
     // creating an array of objects may be a little of an overkill
     // for this exercise but it's a style I like
+    // also it would be helpful for a proper physics simulation
 
     gameEngine.addActor(lander, 'lander');
     gameEngine.addActor(rover, 'rover');
