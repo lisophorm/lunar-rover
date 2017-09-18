@@ -4,6 +4,8 @@ beforeEach(function () {
     setFixtures('<div id="moon"></div><div id="lander"><div id="rover"></div></div>');
 });
 
+// should have used async testing ;-)
+
 describe("The Lander", function () {
     var lander=new Lander();
 

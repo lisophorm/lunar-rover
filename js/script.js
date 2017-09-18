@@ -10,7 +10,7 @@
 
 //**************************
 // the main loop is at the very bottom
-// due the limited amount of time I could not investigate a more elegant way to pass the tests other than static attributes
+// due the limited amount of time I could not write async tests and I used static attributes
 //
 // also the gravity is very crude, but the associative array with all the objects could be used with a physics engine
 //****************************
@@ -72,7 +72,6 @@ function Moon() {
 // iteration stub in case we want to create more complex game logic
 Moon.prototype.iteration = function () {
     console.log('iteration cycle of Moon');
-
 }
 
 Moon.prototype.pos = function (point) {
@@ -97,7 +96,6 @@ GameEngine.prototype.sendUserInput=function(keycode) {
         default:
             this.thrustDirection=0;
             break;
-
     }
 }
 
