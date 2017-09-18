@@ -30,8 +30,10 @@ function Lander() {
 
 // iteration stub in case we want to create more complex game logic
 
-Lander.prototype.iteration = function () {
+Lander.prototype.iteration = function (gravity,thrust) {
     //
+    this.coords.y+=gravity;
+    this.coords.x+=thrust;
 }
 
 Lander.prototype.pos = function (point) {
@@ -51,9 +53,10 @@ function Rover() {
 
 
 // iteration stub in case we want to create more complex game logic
-Rover.prototype.iteration = function () {
-    console.log('iteration cycle of Rover');
-
+Rover.prototype.iteration = function (gravity,thrust) {
+    //
+    this.coords.y+=gravity;
+    this.coords.x+=thrust;
 }
 
 Rover.prototype.pos = function (point) {
@@ -65,8 +68,8 @@ Rover.prototype.pos = function (point) {
 function Moon() {
     this.coords = new Point();
 }
-// iteration stub in case we want to create more complex game logic
 
+// iteration stub in case we want to create more complex game logic
 Moon.prototype.iteration = function () {
     console.log('iteration cycle of Moon');
 
@@ -77,9 +80,8 @@ Moon.prototype.pos = function (point) {
 }
 
 function GameEngine() {
-    this.gino = 15;
+    this.gravity=3;
     this.thrustDirection=0;
-
 }
 
 // Gets left + right
@@ -121,8 +123,8 @@ GameEngine.prototype.executeTick = function () {
         // for simplicity the landing happens once lander collides with moon
         //
         if (!this.checkCollision(this.actorList['lander'],this.actorList['moon'])) {
-            this.actorList['lander'].coords.y+=3;
-            this.actorList['lander'].coords.x+=this.thrustDirection;
+            this.actorList['lander'].iteration(this.gravity,this.thrustDirection);
+
         } else {
             this.actorList['rover'].coords=this.actorList['lander'].coords;
             this.actorList['rover'].disembarked=true;
@@ -132,18 +134,17 @@ GameEngine.prototype.executeTick = function () {
         // rover is affected by "gravity" once detached
         //
         if (!this.checkCollision(this.actorList['rover'],this.actorList['moon'])) {
-            this.actorList['rover'].coords.y+=3;
+            this.actorList['rover'].iteration(this.gravity,0);
         }
     }
 
     if (!this.actorList['rover'].disembarked) {
+        // The Rover will disembark initially at the Landers position
         this.actorList['lander'].pos(this.actorList['lander'].coords);
         this.actorList['rover'].pos(this.actorList['lander'].coords);
     } else {
-        this.actorList['rover'].coords.x+=this.thrustDirection;
+        this.actorList['rover'].iteration(0,this.thrustDirection);
         this.actorList['rover'].pos(this.actorList['rover'].coords);
-        console.log('rover IS disembarked');
-
     }
 }
 
