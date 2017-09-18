@@ -87,7 +87,6 @@ function GameEngine() {
 // Gets left + right
 
 GameEngine.prototype.sendUserInput=function(keycode) {
-    console.log('key pressed',keycode);
     switch(keycode) {
         case 37:
             this.thrustDirection=-1;
@@ -170,12 +169,10 @@ GameEngine.prototype.initGame = function() {
     // old trick for scoping
     var THIS = this;
     $(document).on('keydown', function(e){
-        console.log('GINO',e.which);
         THIS.sendUserInput(e.which);
 
     });
     $(document).on('keyup', function(e){
-        console.log('GINO',e.which);
         THIS.sendUserInput(0);
     });
 
